@@ -26,7 +26,7 @@ namespace WeatherBlink
     public sealed partial class MainPage : Page
     {
         private const int FAST_INTERVAL = 500;
-        private const int SLOW_INTERVAL = 1000;
+        private const int SLOW_INTERVAL = 2000;
 
         private const int LED_PIN = 5;
         private GpioPin gpioPin;
@@ -48,12 +48,12 @@ namespace WeatherBlink
 
         private void BlinkFast()
         {
-            Blink(500);
+            Blink(FAST_INTERVAL);
         }
 
         private void BlinkSlow()
         {
-            Blink(1000);
+            Blink(SLOW_INTERVAL);
         }
 
 
@@ -76,6 +76,7 @@ namespace WeatherBlink
         private void SetLightStatus(GpioPinValue pinValue)
         {
             gpioPin.Write(pinValue);
+            gpioPinValue = pinValue;
         }
 
 
@@ -102,7 +103,6 @@ namespace WeatherBlink
                 TurnLightOn();
             }
 
-            gpioPin.Write(gpioPinValue);
 
         }
         private void InitializeGPIO()
@@ -161,7 +161,6 @@ namespace WeatherBlink
             {
                 BlinkSlow();
                 txtStatus.Text = "No freezing weather in forecast.";
-
             }
 
 
