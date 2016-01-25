@@ -133,21 +133,7 @@ namespace WeatherBlink
 
         private async void LoadWeatherData()
         {
-            var apiKey = "eaeffbce900c25b56ee86ee90e43615c";
-            var location = this.txbLocation.Text;
-            var apiRequestFormatString = "http://api.openweathermap.org/data/2.5/weather?zip={0},us&appid={1}";
-
-            txtStatus.Text = string.Format("Loading weather data for {0}", location);
-
-            HttpClient webClient = new HttpClient();
-            var response = await webClient.GetAsync(string.Format(apiRequestFormatString, location, apiKey));
-            var weatherJson = await response.Content.ReadAsStringAsync();
-
-            JsonObject jsonObject = JsonObject.Parse(weatherJson);
-
-            var weatherObject = jsonObject.GetNamedObject("main");
-            var minTempValue = weatherObject.GetNamedValue("temp_min");
-            var minTempDouble = minTempValue.GetNumber();
+            double minTempDouble = await GetForecastLowTempature();
 
             // 38F/3.3C = 276.483 Kelvin 
 
@@ -166,6 +152,26 @@ namespace WeatherBlink
 
 
 
+        }
+
+        private async System.Threading.Tasks.Task<double> GetForecastLowTempature()
+        {
+            var apiKey = "eaeffbce900c25b56ee86ee90e43615c";
+            var location = this.txbLocation.Text;
+            var apiRequestFormatString = "http://api.openweathermap.org/data/2.5/weather?zip={0},us&appid={1}";
+
+            txtStatus.Text = string.Format("Loading weather data for {0}", location);
+
+            HttpClient webClient = new HttpClient();
+            var response = await webClient.GetAsync(string.Format(apiRequestFormatString, location, apiKey));
+            var weatherJson = await response.Content.ReadAsStringAsync();
+
+            JsonObject jsonObject = JsonObject.Parse(weatherJson);
+
+            var weatherObject = jsonObject.GetNamedObject("main");
+            var minTempValue = weatherObject.GetNamedValue("temp_min");
+            var minTempDouble = minTempValue.GetNumber();
+            return minTempDouble;
         }
     }
 }
