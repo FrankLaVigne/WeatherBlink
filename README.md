@@ -15,4 +15,4 @@ If you simply can't wait for the article to come out, then you'll need the follo
 
 ##Project Goals
 
-WeatherBlink is meant for gardeners who want to start their planting early, but live in areas prone to cold weather well into Spring.
+WeatherBlink is meant for gardeners who want to start their planting early, but live in areas prone to cold weather well into Spring.  It pulls down weather forecast data.  If the forecast low is near freezing (39F/3.3C), the LED light will blink rapidly.  Otherwise, the LED blinks slowly.
